@@ -1,0 +1,6 @@
+# RAG extras for blockrank-rag
+# Install with: pip install -r requirements-rag.txt
+rank-bm25
+sentence-transformers>=3.0.0
+# For full BlockRank training / original scripts you may also need the reference:
+# git+https://github.com/nilesh2797/BlockRank.git

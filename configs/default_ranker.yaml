@@ -1,0 +1,9 @@
+model:
+  model_name: "quicktensor/blockrank-msmarco-mistral-7b"
+  attn_layer: 20
+  num_last_queries: 16
+  template: "mistral"
+
+data:
+  num_documents: 20
+  max_block_length: 256

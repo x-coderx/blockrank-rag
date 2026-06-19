@@ -1,0 +1,18 @@
+data:
+  data_path: data/synthetic_icr.jsonl
+  max_block_length: 128
+  num_documents: 8
+model:
+  attn_implementation: default_blockrank
+  model_name_or_path: facebook/opt-125m
+  use_blockrank: true
+  use_lora: true
+training:
+  aux_layer_idx: 4
+  aux_loss_weight: 0.1
+  gradient_accumulation_steps: 4
+  max_steps: 20
+  num_train_epochs: 1
+  output_dir: outputs/blockrank-smoke
+  per_device_train_batch_size: 1
+  use_aux_loss: true

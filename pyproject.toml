@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "blockrank-rag"
+version = "0.1.0"
+description = "BlockRank: Efficient In-Context Ranking for RAG — production-grade implementation and toolkit based on the paper 'Scalable In-context Ranking with Generative Models'"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [{name = "Local Implementation (inspired by Nilesh Gupta et al.)"}]
+keywords = ["rag", "ranking", "llm", "information-retrieval", "efficient-inference", "attention"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "torch>=2.3.0",
+    "transformers>=4.41.0",
+    "peft>=0.11.0",
+    "accelerate>=0.30.0",
+    "datasets>=2.19.0",
+    "numpy",
+    "tqdm",
+    "pydantic>=2.0",
+    "jinja2",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+rag = [
+    # rank-bm25 provides a fast, lightweight, pure-Python BM25 first-stage retriever.
+    # Recommended for production RAG pipelines alongside BlockRank reranking.
+    "rank-bm25",
+    "sentence-transformers>=3.0.0",  # optional dense retrieval
+]
+ui = [
+    "gradio>=4.0.0",
+]
+serving = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
+]
+eval = [
+    "pytrec-eval-terrier",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4.0",
+    "black>=24.0",
+    "mypy>=1.10",
+    "pre-commit",
+    "ipython",
+]
+all = ["blockrank-rag[rag,ui,serving,eval,dev]"]
+
+[project.scripts]
+blockrank = "blockrank_rag.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/blockrank_rag"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q --tb=short"
